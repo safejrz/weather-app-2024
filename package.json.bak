@@ -8,7 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-icons": "^3.9.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
@@ -44,6 +44,7 @@
     "@storybook/addon-viewport": "^5.3.17",
     "@storybook/addons": "^5.3.17",
     "@storybook/preset-create-react-app": "^2.1.0",
-    "@storybook/react": "^5.3.17"
+    "@storybook/react": "^5.3.17",
+    "web-vitals": "^3.5.2"
   }
 }

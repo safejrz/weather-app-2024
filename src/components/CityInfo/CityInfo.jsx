@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-//import Typography from '@material-ui/core/Typography'
+import Typography from '@material-ui/core/Typography'
 
 const CityInfo = ({ city, country }) => {
     return (
-            <>
-            <h4>{city},</h4>
-            <h6>{country}</h6>
-            </>
+        <>
+            <Typography display="inline" variant="h4">{city}, </Typography>
+            <Typography display="inline" variant="h6">{country}</Typography>
+        </>
     )
 }
 
