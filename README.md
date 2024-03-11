@@ -2,9 +2,7 @@ NOTE!!!: This program may be too old to run as is, you may need to run this comm
 $env:NODE_OPTIONS = "--openssl-legacy-provider"
 
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Getting Started with WeatherApp 2024
 
 ## Available Scripts
 
