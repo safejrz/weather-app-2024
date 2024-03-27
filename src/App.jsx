@@ -7,6 +7,7 @@ import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
 import NotFoundPage from './pages/NotFoundPage'
+import WelcomeScreen from './components/WelcomeScreen'
 
 const App = () => {
     return (        
@@ -15,10 +16,13 @@ const App = () => {
                 <Route exact path="/">
                     <WelcomePage />
                 </Route>
+                <Route path="/welcome">
+                    <WelcomeScreen />
+                </Route> 
                 <Route path="/main">
                     <MainPage />
                 </Route>      
-                <Route path="/city">
+                <Route path="/city">                    
                     <CityPage />
                 </Route> 
                 <Route>
