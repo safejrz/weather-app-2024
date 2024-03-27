@@ -6,6 +6,7 @@ import Weather from './../components/Weather'
 import WeatherDetails from './../components/WeatherDetails'
 import ForecastChart from './../components/ForecastChart'
 import Forecast from './../components/Forecast'
+import { Button } from '@material-ui/core'
 
 const dataExample = [
     {
@@ -75,13 +76,15 @@ const CityPage = () => {
                 <Weather state={state} temperature={temperature} />
                 <WeatherDetails humidity={humidity} 
                     wind={wind} />
-            </Grid>
+            </Grid>            
             <Grid item>
-                <ForecastChart data={data} />
+                <ForecastChart data={data} />                
             </Grid>
-            <Grid item>
+            <Grid item 
+                justify='center'>
                 <Forecast forecastItemList={forecastItemList} />
-            </Grid>
+                    <Link to="/">Ir al inicio</Link>
+            </Grid>            
         </Grid>        
     )
 }
