@@ -5,6 +5,7 @@ import { AppBar, Grid, Toolbar } from "@material-ui/core";
 import { IconContext } from "react-icons";
 import { Link as LinkRouter } from 'react-router-dom';
 import { Typography } from "@material-ui/core";
+import IconState from './../IconState'
 
 const AppFrame = ({ children }) => {
     return (
@@ -18,7 +19,8 @@ const AppFrame = ({ children }) => {
                     to="/main" 
                     color="inherit" 
                     aria-label="menu">
-                        <IconContext.Provider value={{size:'2em'}}>
+                        <IconContext.Provider value={{size:'2em'}}>                        
+                            <IconState state="sunny" />
                         </IconContext.Provider>
                     </Link>
                 </IconButton>                

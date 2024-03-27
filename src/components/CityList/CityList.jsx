@@ -9,7 +9,7 @@ import Weather from './../Weather'
 // li: es un item (según tag html, tiene el role "listitem")
 // renderCityAndCountry se va a convertir en una función que retorna otra función
 const renderCityAndCountry = eventOnClickCity => cityAndCountry => {
-    const { city, country } = cityAndCountry
+    const { city, country, state } = cityAndCountry
 
     return (
         <ListItem
@@ -28,7 +28,7 @@ const renderCityAndCountry = eventOnClickCity => cityAndCountry => {
                 <Grid item
                     md={4}
                     xs={12}>
-                    <Weather temperature={10} state="sunny" />
+                    <Weather temperature={10} state={state} />
                 </Grid>
             </Grid>
         </ListItem>

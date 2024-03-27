@@ -7,6 +7,7 @@ import WeatherDetails from './../components/WeatherDetails'
 import ForecastChart from './../components/ForecastChart'
 import Forecast from './../components/Forecast'
 import { Button } from '@material-ui/core'
+import AppFrame from '../components/AppFrame'
 
 const dataExample = [
     {
@@ -61,31 +62,33 @@ const CityPage = () => {
     const forecastItemList = forecastItemListExample
 
     return (
-        <Grid container
-            justify="space-around"
-            direction="column"
-            spacing={2}>
-            <Grid item container 
-                xs={12} 
-                justify="center"
-                alignItems="flex-end">
-                <CityInfo city={city} country={country} />
-            </Grid>
-            <Grid container item xs={12}
-                justify="center">
-                <Weather state={state} temperature={temperature} />
-                <WeatherDetails humidity={humidity} 
-                    wind={wind} />
-            </Grid>            
-            <Grid item>
-                <ForecastChart data={data} />                
-            </Grid>
-            <Grid item 
-                justify='center'>
-                <Forecast forecastItemList={forecastItemList} />
-                    <Link to="/">Ir al inicio</Link>
-            </Grid>            
-        </Grid>        
+        <AppFrame>
+            <Grid container
+                justify="space-around"
+                direction="column"
+                spacing={2}>
+                <Grid item container 
+                    xs={12} 
+                    justify="center"
+                    alignItems="flex-end">
+                    <CityInfo city={city} country={country} />
+                </Grid>
+                <Grid container item xs={12}
+                    justify="center">
+                    <Weather state={state} temperature={temperature} />
+                    <WeatherDetails humidity={humidity} 
+                        wind={wind} />
+                </Grid>            
+                <Grid item>
+                    <ForecastChart data={data} />                
+                </Grid>
+                <Grid item 
+                    justify='center'>
+                    <Forecast forecastItemList={forecastItemList} />
+                        <Link to="/">Ir al inicio</Link>
+                </Grid>            
+            </Grid>        
+        </AppFrame>
     )
 }
 
