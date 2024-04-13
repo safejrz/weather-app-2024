@@ -29,11 +29,14 @@ useEffect(() => {
 
 }, [vanta])
     return (
-    <div ref={myRefDiv}>
-        WelcomeScreen
+    <div className='full' ref={myRefDiv}>
+            <div>
+                {children}
+            </div>            
     </div>
   )
 }
+
 
 WelcomeScreen.propTypes = {
     children : PropTypes.node,

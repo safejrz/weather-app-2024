@@ -17,7 +17,7 @@ const App = () => {
                     <WelcomePage />
                 </Route>
                 <Route path="/welcome">
-                    <WelcomeScreen />
+                    <WelcomePage />
                 </Route> 
                 <Route path="/main">
                     <MainPage />
