@@ -5,12 +5,11 @@ import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
 import { IconContext } from 'react-icons'
 import { WiDaySunny } from 'react-icons/wi'
-import { Link as RouterLink } from 'react-router-dom'
 
 const WelcomePage = () => {
     return (
         <WelcomeScreen>
-            <h1>Welcome</h1>
+            <h1 className='welcometext'>Welcome</h1>
             <Grid container
                 direction='column'
                 justify='center'        
