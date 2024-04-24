@@ -1,6 +1,5 @@
 import React from "react";
-import { PropTypes } from "prop-types";
-import {IconButton, Icon, Link } from "@material-ui/core";
+import {IconButton, Link } from "@material-ui/core";
 import { AppBar, Grid, Toolbar } from "@material-ui/core";
 import { IconContext } from "react-icons";
 import { Link as LinkRouter } from 'react-router-dom';
@@ -10,7 +9,7 @@ import IconState from './../IconState'
 const AppFrame = ({ children }) => {
     return (
         <Grid container 
-        justify="center">
+        justifyContent="center">
             <AppBar position="static">
             <Toolbar variant="dense">
                 <IconButton color="inherit">

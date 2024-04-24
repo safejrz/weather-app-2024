@@ -6,7 +6,6 @@ import Weather from './../components/Weather'
 import WeatherDetails from './../components/WeatherDetails'
 import ForecastChart from './../components/ForecastChart'
 import Forecast from './../components/Forecast'
-import { Button } from '@material-ui/core'
 import AppFrame from '../components/AppFrame'
 
 const dataExample = [
@@ -45,16 +44,17 @@ const dataExample = [
 const forecastItemListExample = [
 	{ hour: 18, state:"clear", temperature:17, weekDay:"Jueves" },
 	{ hour: 6, state:"clouds", temperature:18, weekDay:"Viernes" },
-	{ hour: 12, state:"drizzle", temperature:18, weekDay:"Viernes" },
-	{ hour: 18, state:"clouds", temperature:19, weekDay:"Viernes" },
-	{ hour: 14, state:"rain", temperature:17, weekDay:"Sábado" },
-	{ hour: 14, state:"rain", temperature:17, weekDay:"Sábado" }, 
+	{ hour: 12, state:"snow", temperature:18, weekDay:"Sábado" },
+    //{ hour: 12, state:"drizzle", temperature:18, weekDay:"Sábado" }, //This icon does not work.
+	 { hour: 18, state:"thunderstorm", temperature:19, weekDay:"Domingo" },
+	 { hour: 14, state:"thunderstorm", temperature:17, weekDay:"Lunes" },
+	{ hour: 14, state:"thunderstorm", temperature:17, weekDay:"Martes" }, 
 ]
 
 const CityPage = () => {
     const city = "Buenos Aires"
     const country = "Argentina"
-    const state = "cloudy"
+    const state = "clouds"
     const temperature = 20
     const humidity = 80
     const wind = 5
@@ -64,17 +64,17 @@ const CityPage = () => {
     return (
         <AppFrame>
             <Grid container
-                justify="space-around"
+                justifyContent="space-around"
                 direction="column"
                 spacing={2}>
                 <Grid item container 
                     xs={12} 
-                    justify="center"
+                    justifyContent="center"
                     alignItems="flex-end">
                     <CityInfo city={city} country={country} />
                 </Grid>
                 <Grid container item xs={12}
-                    justify="center">
+                    justifyContent="center">
                     <Weather state={state} temperature={temperature} />
                     <WeatherDetails humidity={humidity} 
                         wind={wind} />
@@ -82,8 +82,7 @@ const CityPage = () => {
                 <Grid item>
                     <ForecastChart data={data} />                
                 </Grid>
-                <Grid item 
-                    justify='center'>
+                <Grid item >
                     <Forecast forecastItemList={forecastItemList} />
                         <Link to="/">Ir al inicio</Link>
                 </Grid>            

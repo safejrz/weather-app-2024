@@ -5,12 +5,12 @@ import AppFrame from '../components/AppFrame'
 import { Paper } from '@material-ui/core'
 
 const cities = [       
-    { city: "Madrid", country: "España", lat:40.4167047, lon:-3.7035825},
-    { city: "Ciudad de México", country: "México", lat:19.4326296, lon:-99.1331785},
-    { city: "Guadalajara", country: "México", lat: 20.6720375, lon: -103.338396,},
-    { city: "Zapopan", country: "México", lat:20.7211203, lon:-103.3913671},
-    { city: "Concord", country: "CA, USA", lat: 37.9768525, lon: -122.0335624},
-    { city: "Anaheim", country: "CA, USA", lat: 33.8347516, lon: -117.911732}
+    { city: "Madrid", country: "España"},
+    { city: "Ciudad de México", country: "México"},
+    { city: "Guadalajara", country: "México"},
+    { city: "Zapopan", country: "México"},
+    { city: "Concord", country: "US"},
+    { city: "Anaheim", country: "US"},
 ]
 
 const MainPage = () => {

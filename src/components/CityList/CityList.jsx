@@ -6,21 +6,21 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
-import { temp } from 'three/examples/jsm/nodes/Nodes.js'
-import { unstable_batchedUpdates } from 'react-dom'
 import convertUnits from 'convert-units'
+
+const appid = "62cbfa07b22ea0d74c79b059f7305a4d"
 
 // li: es un item (según tag html, tiene el role "listitem")
 // renderCityAndCountry se va a convertir en una función que retorna otra función
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
-    const { city, country, lat, lon } = cityAndCountry
+    const { city, country } = cityAndCountry
     return (
         <ListItem
             button
             key={city} 
             onClick={eventOnClickCity} >
             <Grid container 
-                justify="center"
+            justifyContent="center"
                 alignItems="center"
             >
                 <Grid item
@@ -35,8 +35,7 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
                         weather ? 
                         (<Weather 
                         temperature={weather.temperature}
-                        state={weather.state} />) 
-                        : 
+                        state={weather.state} />) : 
                         ("No data")
                     }                    
                 </Grid>
@@ -46,54 +45,51 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 }
 
 // cities: es un array, y en cada item tiene que tener la ciudad, pero además el country
-// ul: tag html para listas no ordenadas
 const CityList = ({ cities, onClickCity }) => {
-
 const [allWeather, setAllWeather] = useState({})
+    useEffect(() => {
+    const setWeather = async (city, country) => {
+        const st = country === 'US' ? 'CA' : ''
+        const urlGeo = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${st},${country}&limit=1&appid=${appid}`
+        
+        const response = await axios.get(urlGeo)
+        const geoData = response.data
+        //console.log("geoData [geoData]", geoData)
+        
+        let lat = 0
+        let lon = 0
+        if(geoData === undefined){
+            console.log(`No geolocalization for ${city},${st},${country}`)
+        }
+        else{
+            lat = geoData[0].lat
+            lon = geoData[0].lon
+            console.log(`${city}-${country}:\nLatitude ${lat}\nLongitude ${lon}`)
 
-const appid = "62cbfa07b22ea0d74c79b059f7305a4d"
+            const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
+            const response = await new axios.get(urlWeather)
+            const weatherData = response.data
+            //console.log("weatherData [weatherData]", weatherData)
+            if(weatherData === undefined){
 
-useEffect(() => {
-const setWeather = (city, country, lat, lon) => {    
-    //let
-    // lat = 19.4326296
-    // //let
-    // lon = -99.1331785
-
-    /*const urlGeo = `http://api.openweathermap.org/geo/1.0/direct?q=${city}},,${country}}&limit=1&appid=${appid}`        
-
-    axios
-        .get(urlGeo)
-        .then(response => {
-            const { data } = response
-            lat = data[0].lat
-            lon = data[0].lon
-            console.log("data [data]", data)
-            console.log(`${city}-${country}: Latitude ${lat} and longitude ${lon}`)
-          })
-    setTemp(lat, lon, city, country);*/
-    
-        const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
-        console.log(urlWeather)
-    
-        axios
-            .get(urlWeather)
-            .then(response => {
-                const { data } = response                
-                let temperature = Number(convertUnits(data.main.temp).from("K").to("C").toFixed(1))
-                const state = data.weather[0].main.toLowerCase()
-                const propName = `${city}-${country}`
-                const propValue = { temperature, state}
+            }
+            else
+            {
+                let temperature = Number(convertUnits(weatherData.main.temp).from("K").to("C").toFixed(1))
+                const state = weatherData.weather[0].main.toLowerCase()
                 console.log(`${city}-${country}:${temperature}, ${state}`)
-                                    
-                setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))                    
-            })
-}
 
-cities.forEach(({city, country, lat, lon}) => {
-    setWeather(city, country, lat, lon)
-});
+                const propName = `${city}-${country}`
+                const propValue = { temperature, state }
 
+                setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
+            }
+        }
+    }
+        
+    cities.forEach(({city, country}) => {
+        setWeather(city, country)
+    });
 }, [cities])
 
     return (
