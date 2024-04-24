@@ -18,14 +18,14 @@ const Weather = ({ temperature, state }) => {
                     state ?
                     <IconState state={state} />
                     :
-                    <Skeleton variant='circle' height={80} width={80}></Skeleton>
+                    <Skeleton variant='circle' height={80} width={80} />
                 }
             </IconContext.Provider>
             {
                 temperature ?
                 <Typography display="inline" variant="h2">{temperature}°C</Typography>
                 :
-                <Skeleton variant='square' height={80} width={80}></Skeleton>
+                <Skeleton variant='square' height={80} width={80} />
             }            
         </Grid>
     )
