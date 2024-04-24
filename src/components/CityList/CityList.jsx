@@ -48,39 +48,67 @@ const [allWeather, setAllWeather] = useState({})
         const st = country === 'US' ? 'CA' : ''
         const urlGeo = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${st},${country}&limit=1&appid=${appid}`
         
-        const response = await axios.get(urlGeo)
-        const geoData = response.data
-        //console.log("geoData [geoData]", geoData)
-        
+        const geoResponse = await axios.get(urlGeo)
+        .catch(error => {
+            //Errores que nos responde el server (500, 400, etc.)
+            if(error.response) {
+                const { data, status } = error.response
+                console.log("data", data)
+                console.log("status", status)
+            }//Errores que suceden por no llegar al server (network, host unreachable)
+            else if (error.request){
+                console.log("Server unreachable or no internet")           
+            }//Errores imprevistos (Others)
+            else {
+                console.log("Unhandled exception")    
+            }
+        })
+
+        if(geoResponse === undefined || geoResponse.data === undefined){
+            //console.log(`No geolocalization for ${city},${st},${country}`)
+            return;
+        }
+
+        const geoData = geoResponse.data
+        //console.log("geoData [geoData]", geoData)     
         let lat = 0
-        let lon = 0
-        if(geoData === undefined){
-            console.log(`No geolocalization for ${city},${st},${country}`)
-        }
-        else{
-            lat = geoData[0].lat
-            lon = geoData[0].lon
-            console.log(`${city}-${country}:\nLatitude ${lat}\nLongitude ${lon}`)
-
-            const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
-            const response = await new axios.get(urlWeather)
-            const weatherData = response.data
-            //console.log("weatherData [weatherData]", weatherData)
-            if(weatherData === undefined){
-
+        let lon = 0        
+        lat = geoData[0].lat
+        lon = geoData[0].lon
+        console.log(`${city}-${country}:\nLatitude ${lat}\nLongitude ${lon}`)
+        const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
+        const weatherResponse = await new axios.get(urlWeather)
+        .catch(error => {
+            //Errores que nos responde el server (500, 400, etc.)
+            if(error.response) {
+                const { data, status } = error.response
+                console.log("data", data)
+                console.log("status", status)
+            }//Errores que suceden por no llegar al server (network, host unreachable)
+            else if (error.request){
+                console.log("Server unreachable or no internet")           
+            }//Errores imprevistos (Others)
+            else {
+                console.log("Unhandled exception")
             }
-            else
-            {
-                let temperature = Number(convertUnits(weatherData.main.temp).from("K").to("C").toFixed(1))
-                const state = weatherData.weather[0].main.toLowerCase()
-                console.log(`${city}-${country}:${temperature}, ${state}`)
+        })
 
-                const propName = `${city}-${country}`
-                const propValue = { temperature, state }
-
-                setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
-            }
+        if(weatherResponse === undefined || weatherResponse.data === undefined){ 
+            return            
         }
+
+        const weatherData = weatherResponse.data
+        //console.log("weatherData [weatherData]", weatherData)
+        if(weatherData !== undefined){
+            let temperature = Number(convertUnits(weatherData.main.temp).from("K").to("C").toFixed(1))
+            const state = weatherData.weather[0].main.toLowerCase()
+            console.log(`${city}-${country}: ${temperature}, ${state}`)
+
+            const propName = `${city}-${country}`
+            const propValue = { temperature, state }
+
+            setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
+        }        
     }
         
     cities.forEach(({city, country}) => {

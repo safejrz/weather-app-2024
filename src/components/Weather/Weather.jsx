@@ -25,7 +25,7 @@ const Weather = ({ temperature, state }) => {
                 temperature ?
                 <Typography display="inline" variant="h2">{temperature}°C</Typography>
                 :
-                <Skeleton variant='square' height={80} width={80} />
+                <Skeleton variant='rect' height={80} width={80} />
             }            
         </Grid>
     )
