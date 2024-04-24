@@ -20,7 +20,7 @@ const AppFrame = ({ children }) => {
                     color="inherit" 
                     aria-label="menu">
                         <IconContext.Provider value={{size:'2em'}}>                        
-                            <IconState state="sunny" />
+                            <IconState state="clear" />
                         </IconContext.Provider>
                     </Link>
                 </IconButton>                

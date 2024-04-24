@@ -1,26 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { WiCloud,
+import {        
     WiDayCloudy,
-    WiDayFog,
     WiDaySunny,
-    WiRain } from 'react-icons/wi'
+    WiRain, 
+    WiSnow,
+    WiThunderstorm} from 'react-icons/wi'
 
+    //WiDayFog,
+     //WiCloud,
+
+//Thunderstorm Drizzle Rain Snow Clear Clouds
 export const validValues = [
-        "cloud",
-        "cloudy",
-        "fog",
-        "sunny",
+        "clouds",        
+        "clear",        
         "rain",
+        "snow",
+        "drizzle",
+        "thunderstorm"
     ]
 
-const stateByName = {
-    cloud: WiCloud,
-    cloudy: WiDayCloudy,
-    fog: WiDayFog,
-    sunny: WiDaySunny,
+        //"cloud",
+        //fog,
+        //"sunny",
+
+const stateByName = {    
+    clouds: WiDayCloudy,    
+    clear: WiDaySunny, //sunny    
     rain: WiRain,
+    snow: WiSnow,
+    drizzle: null,
+    thunderstorm: WiThunderstorm
 }
+    //cloud: WiCloud,
+    //fog: WiDayFog,
 
 const IconState = ({ state }) => {
     const StateByName = stateByName[state]

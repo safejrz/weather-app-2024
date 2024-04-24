@@ -15,7 +15,7 @@ const Weather = ({ temperature, state }) => {
             <IconContext.Provider value={{ size:'6em'}}>
                 <IconState state={state} />
             </IconContext.Provider>
-            <Typography display="inline" variant="h2">{temperature}</Typography>
+            <Typography display="inline" variant="h2">{temperature}°C</Typography>
         </Grid>
     )
 }
