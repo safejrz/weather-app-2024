@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { IconContext } from 'react-icons'
 import IconState, { validValues } from './../IconState'
+import { Skeleton } from '@material-ui/lab'
 
 const Weather = ({ temperature, state }) => {
     return (
@@ -13,16 +14,26 @@ const Weather = ({ temperature, state }) => {
             alignItems="center"
             spacing={1}>
             <IconContext.Provider value={{ size:'6em'}}>
-                <IconState state={state} />
+                {
+                    state ?
+                    <IconState state={state} />
+                    :
+                    <Skeleton variant='circle' height={80} width={80}></Skeleton>
+                }
             </IconContext.Provider>
-            <Typography display="inline" variant="h2">{temperature}°C</Typography>
+            {
+                temperature ?
+                <Typography display="inline" variant="h2">{temperature}°C</Typography>
+                :
+                <Skeleton variant='square' height={80} width={80}></Skeleton>
+            }            
         </Grid>
     )
 }
 
 Weather.propTypes = {
-    temperature: PropTypes.number.isRequired,
-    state: PropTypes.oneOf(validValues).isRequired,
+    temperature: PropTypes.number,
+    state: PropTypes.oneOf(validValues),
 }
 
 export default Weather

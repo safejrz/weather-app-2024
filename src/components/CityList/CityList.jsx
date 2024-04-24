@@ -30,14 +30,10 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
                 </Grid>
                 <Grid item
                     md={4}
-                    xs={12}>
-                    {
-                        weather ? 
-                        (<Weather 
-                        temperature={weather.temperature}
-                        state={weather.state} />) : 
-                        ("No data")
-                    }                    
+                    xs={12}>                        
+                        <Weather 
+                        temperature={weather && weather.temperature}
+                        state={weather && weather.state} />
                 </Grid>
             </Grid>
         </ListItem>
