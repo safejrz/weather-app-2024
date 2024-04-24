@@ -44,14 +44,14 @@ const dataExample = [
 const forecastItemListExample = [
 	{ hour: 18, state:"clear", temperature:17, weekDay:"Jueves" },
 	{ hour: 6, state:"clouds", temperature:18, weekDay:"Viernes" },
-	{ hour: 12, state:"snow", temperature:18, weekDay:"Sábado" },
-    //{ hour: 12, state:"drizzle", temperature:18, weekDay:"Sábado" }, //This icon does not work.
-	 { hour: 18, state:"thunderstorm", temperature:19, weekDay:"Domingo" },
-	 { hour: 14, state:"thunderstorm", temperature:17, weekDay:"Lunes" },
-	{ hour: 14, state:"thunderstorm", temperature:17, weekDay:"Martes" }, 
+	{ hour: 12, state:"drizzle", temperature:18, weekDay:"Sábado" },
+    { hour: 19, state:"snow", temperature:18, weekDay:"Sábado" }, //This icon does not work.
+	{ hour: 18, state:"thunderstorm", temperature:19, weekDay:"Domingo" },
+	{ hour: 14, state:"thunderstorm", temperature:17, weekDay:"Lunes" },
+	{ hour: 14, state:"thunderstorm", temperature:17, weekDay:"Martes" }
 ]
 
-const CityPage = () => {
+function CityPage() {
     const city = "Buenos Aires"
     const country = "Argentina"
     const state = "clouds"
@@ -67,8 +67,8 @@ const CityPage = () => {
                 justifyContent="space-around"
                 direction="column"
                 spacing={2}>
-                <Grid item container 
-                    xs={12} 
+                <Grid item container
+                    xs={12}
                     justifyContent="center"
                     alignItems="flex-end">
                     <CityInfo city={city} country={country} />
@@ -76,17 +76,17 @@ const CityPage = () => {
                 <Grid container item xs={12}
                     justifyContent="center">
                     <Weather state={state} temperature={temperature} />
-                    <WeatherDetails humidity={humidity} 
+                    <WeatherDetails humidity={humidity}
                         wind={wind} />
-                </Grid>            
-                <Grid item>
-                    <ForecastChart data={data} />                
                 </Grid>
-                <Grid item >
+                <Grid item>
+                    <ForecastChart data={data} />
+                </Grid>
+                <Grid item>
                     <Forecast forecastItemList={forecastItemList} />
-                        <Link to="/">Ir al inicio</Link>
-                </Grid>            
-            </Grid>        
+                    <Link to="/">Ir al inicio</Link>
+                </Grid>
+            </Grid>
         </AppFrame>
     )
 }

@@ -5,6 +5,7 @@ import {
     WiDaySunny,
     WiRain, 
     WiSnow,
+    WiDayRainMix,
     WiThunderstorm} from 'react-icons/wi'
 
     //WiDayFog,
@@ -29,7 +30,7 @@ const stateByName = {
     clear: WiDaySunny, //sunny    
     rain: WiRain,
     snow: WiSnow,
-    drizzle: null,
+    drizzle: WiDayRainMix,
     thunderstorm: WiThunderstorm
 }
     //cloud: WiCloud,

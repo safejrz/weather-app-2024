@@ -17,7 +17,7 @@ const renderForecastItem = forecast => {
                 weekDay={weekDay}
                 state={state}
                 temperature={temperature}
-            ></ForecastItem>
+            />
         </Grid>
     )
 }
