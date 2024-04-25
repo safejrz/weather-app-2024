@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
 import convertUnits from 'convert-units'
+import { Alert } from '@material-ui/lab'
 
 const appid = "62cbfa07b22ea0d74c79b059f7305a4d"
 
@@ -21,8 +22,7 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
             onClick={eventOnClickCity} >
             <Grid container 
             justifyContent="center"
-                alignItems="center"
-            >
+                alignItems="center">
                 <Grid item
                     md={8}
                     xs={12}>
@@ -43,72 +43,56 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 // cities: es un array, y en cada item tiene que tener la ciudad, pero además el country
 const CityList = ({ cities, onClickCity }) => {
 const [allWeather, setAllWeather] = useState({})
+const [error, setError] = useState(null)
     useEffect(() => {
     const setWeather = async (city, country) => {
         const st = country === 'US' ? 'CA' : ''
         const urlGeo = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${st},${country}&limit=1&appid=${appid}`
         
-        const geoResponse = await axios.get(urlGeo)
-        .catch(error => {
+        try{
+            const geoResponse = await axios.get(urlGeo)        
+            const geoData = geoResponse.data
+            let lat = 0
+            let lon = 0        
+            lat = geoData[0].lat
+            lon = geoData[0].lon
+            console.log(`${city}-${country}:\nLatitude ${lat}\nLongitude ${lon}`)
+            const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
+            let weatherResponse = await new axios.get(urlWeather)
+
+            if(!weatherResponse || !weatherResponse.data){                
+                throw new Error(`No weather data for ${city},${st},${country}`)
+            }
+
+            const weatherData = weatherResponse.data
+            if(weatherData !== undefined){
+                let temperature = Number(convertUnits(weatherData.main.temp).from("K").to("C").toFixed(1))
+                const state = weatherData.weather[0].main.toLowerCase()
+                console.log(`${city}-${country}: ${temperature}, ${state}`)
+
+                const propName = `${city}-${country}`
+                const propValue = { temperature, state }
+
+                setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
+            }
+        }
+        catch(error){
             //Errores que nos responde el server (500, 400, etc.)
             if(error.response) {
                 const { data, status } = error.response
                 console.log("data", data)
                 console.log("status", status)
+                setError("An error has occured in the server")
             }//Errores que suceden por no llegar al server (network, host unreachable)
             else if (error.request){
                 console.log("Server unreachable or no internet")           
+                setError("Verify internet connection")
             }//Errores imprevistos (Others)
             else {
-                console.log("Unhandled exception")    
-            }
-        })
-
-        if(geoResponse === undefined || geoResponse.data === undefined){
-            //console.log(`No geolocalization for ${city},${st},${country}`)
-            return;
+                console.log(`Exception: ${error.message}`)
+                setError("Error loading information")
+            }            
         }
-
-        const geoData = geoResponse.data
-        //console.log("geoData [geoData]", geoData)     
-        let lat = 0
-        let lon = 0        
-        lat = geoData[0].lat
-        lon = geoData[0].lon
-        console.log(`${city}-${country}:\nLatitude ${lat}\nLongitude ${lon}`)
-        const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
-        const weatherResponse = await new axios.get(urlWeather)
-        .catch(error => {
-            //Errores que nos responde el server (500, 400, etc.)
-            if(error.response) {
-                const { data, status } = error.response
-                console.log("data", data)
-                console.log("status", status)
-            }//Errores que suceden por no llegar al server (network, host unreachable)
-            else if (error.request){
-                console.log("Server unreachable or no internet")           
-            }//Errores imprevistos (Others)
-            else {
-                console.log("Unhandled exception")
-            }
-        })
-
-        if(weatherResponse === undefined || weatherResponse.data === undefined){ 
-            return            
-        }
-
-        const weatherData = weatherResponse.data
-        //console.log("weatherData [weatherData]", weatherData)
-        if(weatherData !== undefined){
-            let temperature = Number(convertUnits(weatherData.main.temp).from("K").to("C").toFixed(1))
-            const state = weatherData.weather[0].main.toLowerCase()
-            console.log(`${city}-${country}: ${temperature}, ${state}`)
-
-            const propName = `${city}-${country}`
-            const propValue = { temperature, state }
-
-            setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
-        }        
     }
         
     cities.forEach(({city, country}) => {
@@ -117,12 +101,17 @@ const [allWeather, setAllWeather] = useState({})
 }, [cities])
 
     return (
-        <List>
+        <div>
             {
-                cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry, 
-                    allWeather[`${cityAndCountry.city}-${cityAndCountry.country}`]))
+                error && <Alert severity="error" onClose={()=> setError(null)} >{error}</Alert>
             }
-        </List>
+            <List>
+                {
+                    cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry, 
+                        allWeather[`${cityAndCountry.city}-${cityAndCountry.country}`]))
+                }
+            </List>
+        </div>
     )
 }
 
