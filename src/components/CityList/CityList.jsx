@@ -9,7 +9,8 @@ import Weather from './../Weather'
 import convertUnits from 'convert-units'
 import { Alert } from '@material-ui/lab'
 
-const appid = "62cbfa07b22ea0d74c79b059f7305a4d"
+const appid = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+const getCityCode = (city, countryCode) => `${city}-${countryCode}`
 
 // li: es un item (según tag html, tiene el role "listitem")
 // renderCityAndCountry se va a convertir en una función que retorna otra función
@@ -70,7 +71,7 @@ const [error, setError] = useState(null)
                 const state = weatherData.weather[0].main.toLowerCase()
                 console.log(`${city}-${country}: ${temperature}, ${state}`)
 
-                const propName = `${city}-${country}`
+                const propName = getCityCode(city, country)
                 const propValue = { temperature, state }
 
                 setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
@@ -108,7 +109,7 @@ const [error, setError] = useState(null)
             <List>
                 {
                     cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry, 
-                        allWeather[`${cityAndCountry.city}-${cityAndCountry.country}`]))
+                        allWeather[getCityCode(cityAndCountry.city, cityAndCountry.country)]))
                 }
             </List>
         </div>
