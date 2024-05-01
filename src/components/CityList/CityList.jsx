@@ -9,7 +9,7 @@ import Weather from './../Weather'
 import convertUnits from 'convert-units'
 import { Alert } from '@material-ui/lab'
 
-const appid = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+const appid = process.env.REACT_APP_APIKEY
 const getCityCode = (city, countryCode) => `${city}-${countryCode}`
 
 // li: es un item (según tag html, tiene el role "listitem")

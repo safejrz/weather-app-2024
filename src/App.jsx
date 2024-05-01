@@ -6,6 +6,7 @@ import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
 import NotFoundPage from './pages/NotFoundPage'
+import ErrorBoundary from './generic/ErrorBoundary/ErrorBoundary'
 
 const App = () => {
     return (        
@@ -22,10 +23,13 @@ const App = () => {
                 </Route>      
                 <Route path="/city">                    
                     <CityPage />
-                </Route> 
+                </Route>
+                <Route exact path="/error">
+                    <ErrorBoundary saludo = "HOLA!!!" />
+                </Route>             
                 <Route>
                     <NotFoundPage />
-                </Route>                                                           
+                </Route>                    
             </Switch>
         </Router>
     )
