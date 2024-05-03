@@ -73,6 +73,7 @@ const [error, setError] = useState(null)
 
                 const propName = getCityCode(city, country)
                 const propValue = { temperature, state }
+                console.log(state)
 
                 setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue}))
             }

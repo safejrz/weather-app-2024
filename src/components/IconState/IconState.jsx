@@ -6,7 +6,8 @@ import {
     WiRain, 
     WiSnow,
     WiDayRainMix,
-    WiThunderstorm} from 'react-icons/wi'
+    WiThunderstorm,
+    WiDayHaze} from 'react-icons/wi'
 
     //WiDayFog,
      //WiCloud,
@@ -18,7 +19,8 @@ export const validValues = [
         "rain",
         "snow",
         "drizzle",
-        "thunderstorm"
+        "thunderstorm",
+        "haze"
     ]
 
         //"cloud",
@@ -31,7 +33,8 @@ const stateByName = {
     rain: WiRain,
     snow: WiSnow,
     drizzle: WiDayRainMix,
-    thunderstorm: WiThunderstorm
+    thunderstorm: WiThunderstorm,
+    haze: WiDayHaze
 }
     //cloud: WiCloud,
     //fog: WiDayFog,
