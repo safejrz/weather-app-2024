@@ -10,17 +10,17 @@ import convertUnits from 'convert-units'
 import { Alert } from '@material-ui/lab'
 
 const appid = process.env.REACT_APP_APIKEY
-const getCityCode = (city, countryCode) => `${city}-${countryCode}`
+const getCityCode = (city, country) => `${city}-${country}`
 
 // li: es un item (según tag html, tiene el role "listitem")
 // renderCityAndCountry se va a convertir en una función que retorna otra función
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
     const { city, country } = cityAndCountry
     return (
-        <ListItem
+        <ListItem                                        
             button
-            key={city} 
-            onClick={eventOnClickCity} >
+            key={getCityCode(city, country)}
+            onClick={ () => eventOnClickCity(city, country)} >
             <Grid container 
             justifyContent="center"
                 alignItems="center">
@@ -49,7 +49,7 @@ const [error, setError] = useState(null)
     const setWeather = async (city, country) => {
         const st = country === 'US' ? 'CA' : ''
         const urlGeo = `http://api.openweathermap.org/geo/1.0/direct?q=${city},${st},${country}&limit=1&appid=${appid}`
-        
+
         try{
             const geoResponse = await axios.get(urlGeo)        
             const geoData = geoResponse.data
@@ -92,7 +92,7 @@ const [error, setError] = useState(null)
             else {
                 console.log(`Exception: ${error.message}`)
                 setError("Error loading information")
-            }            
+            }
         }
     }
         

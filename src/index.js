@@ -5,9 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // Can remove React.StrictMode to avoid checking and things
+  // <React.StrictMode>
     <App />
-  </React.StrictMode>,
+   // </React.StrictMode>
+   ,
   document.getElementById('root')
 );
 

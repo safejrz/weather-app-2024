@@ -16,9 +16,11 @@ const cities = [
 const MainPage = () => {
     const history = useHistory()
 
-    const onClickHandler = () => {
+    const onClickHandler = (city, country) => {
         // history.push permite alterar la URL por programación
-        history.push("/city")
+        // // console.log("city ", city)
+        // // console.log("country ", country)
+        history.push(`/city/${country}/${city}`)
     }
 
     return (
@@ -29,7 +31,7 @@ const MainPage = () => {
                 onClickCity={onClickHandler} />
             </Paper>
         </AppFrame>
-    )
+    )    
 }
 
 export default MainPage
