@@ -1,0 +1,1 @@
+export const getCityCode = (city, country) => `${city}-${country}`
