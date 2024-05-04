@@ -1,11 +1,11 @@
 import  { useState, useEffect } from 'react'
 import axios from 'axios'
 import convertUnits from 'convert-units'
-import { getCityCode } from './../utils/utils'
+import { getCityCode, toCelcius } from './../utils/utils'
 
 const appid = process.env.REACT_APP_APIKEY
 
-const useCityList = (cities) => {
+const useCityList = (cities) => {    
     const [allWeather, setAllWeather] = useState({})
     const [error, setError] = useState(null)
 
@@ -31,7 +31,7 @@ const useCityList = (cities) => {
 
                 const weatherData = weatherResponse.data
                 if (weatherData !== undefined) {
-                    let temperature = Number(convertUnits(weatherData.main.temp).from("K").to("C").toFixed(1))
+                    let temperature = toCelcius(weatherData.main.temp)
                     const state = weatherData.weather[0].main.toLowerCase()
                     console.log(`${city}-${country}: ${temperature}, ${state}`)
 

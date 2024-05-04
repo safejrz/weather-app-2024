@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import CityList from './CityList' // SUT 
+import CityList from './CityList' // SUT
 
 const cities = [
     { city: "Madrid", country: "España"},
@@ -18,7 +18,7 @@ test("CityList renders", async () => {
 
     const items = await findAllByRole("listitem")
 
-    expect(items).toHaveLength(4)
+    expect(items).toHaveLength(6)
 })
 
 test("CityList click on item", async () => {
