@@ -15,7 +15,6 @@ const WelcomeScreen = ({ children }) => {
 
 WelcomeScreen.propTypes = {
     children: PropTypes.node,
-
 }
 
 export default WelcomeScreen
