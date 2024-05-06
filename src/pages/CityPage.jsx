@@ -9,10 +9,18 @@ import Forecast from './../components/Forecast'
 import AppFrame from '../components/AppFrame'
 import useCityPage from '../hooks/useCityPage'
 import { Alert } from '@material-ui/lab'
+import { getCityCode } from '../utils/utils'
+import useCityList from '../hooks/useCityList'
 
 const CityPage = () => {
         
-    const {city, country, state, chartData, forecastItemList, error, setError} = useCityPage()    
+    const {city, country, chartData, forecastItemList, error, setError} = useCityPage()
+    const { allWeather } = useCityList([{city, country}])
+    const weather = allWeather[getCityCode(city, country)]
+    const temperature = weather && weather.temperature
+    const state = weather && weather.state
+    const humidity = weather && weather.humidity
+    const wind = weather && weather.wind
 
     return (
         <div>
@@ -33,9 +41,9 @@ const CityPage = () => {
                     </Grid>
                     <Grid container item xs={12}
                         justifyContent="center">
-                        <Weather state={state.state} temperature={state.temperature} />
-                        <WeatherDetails humidity={state.humidity}
-                            wind={state.wind} />
+                        <Weather state={state} temperature={temperature} />
+                        <WeatherDetails humidity={humidity}
+                            wind={wind} />
                     </Grid>
                     <Grid item>{
                         chartData && <ForecastChart data={chartData} />

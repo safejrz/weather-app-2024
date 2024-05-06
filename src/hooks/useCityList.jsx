@@ -1,6 +1,5 @@
 import  { useState, useEffect } from 'react'
 import axios from 'axios'
-import convertUnits from 'convert-units'
 import { getCityCode, toCelcius } from './../utils/utils'
 
 const appid = process.env.REACT_APP_APIKEY
@@ -33,10 +32,12 @@ const useCityList = (cities) => {
                 if (weatherData !== undefined) {
                     let temperature = toCelcius(weatherData.main.temp)
                     const state = weatherData.weather[0].main.toLowerCase()
+                    const humidity = 0
+                    const wind = weatherData.wind.speed
                     console.log(`${city}-${country}: ${temperature}, ${state}`)
 
                     const propName = getCityCode(city, country)
-                    const propValue = { temperature, state }
+                    const propValue = { temperature, state, humidity, wind }
 
                     setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue }))
                 }
