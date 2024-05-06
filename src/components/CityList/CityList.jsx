@@ -12,12 +12,12 @@ import { Alert } from '@material-ui/lab'
 // li: es un item (según tag html, tiene el role "listitem")
 // renderCityAndCountry se va a convertir en una función que retorna otra función
 const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
-    const { city, country } = cityAndCountry
+    const { city, countryCode, country } = cityAndCountry
     return (
         <ListItem
             button
-            key={getCityCode(city, country)}
-            onClick={() => eventOnClickCity(city, country)} >
+            key={getCityCode(city, countryCode)}
+            onClick={() => eventOnClickCity(city, countryCode)} >
             <Grid container
                 justifyContent="center"
                 alignItems="center">
@@ -39,22 +39,26 @@ const renderCityAndCountry = eventOnClickCity => (cityAndCountry, weather) => {
 }
 
 // cities: es un array, y en cada item tiene que tener la ciudad, pero además el country
-const CityList = ({ cities, onClickCity }) => {
+// ul: tag html para listas no ordenadas
+const CityList = ({ cities, onClickCity, actions, data }) => {
+    const { allWeather } = data
+    const { onSetAllWeather } = actions
 
-    const { allWeather, error, setError } = useCityList(cities)
-
+    const { error, setError } = useCityList(cities, allWeather, onSetAllWeather)
+    
     return (
         <div>
             {
-                error && <Alert severity="error" onClose={() => setError(null)} >{error}</Alert>
+                error && <Alert onClose={() => setError(null)} severity="error">{error}</Alert>
             }
             <List>
                 {
-                    cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry,
-                        allWeather[getCityCode(cityAndCountry.city, cityAndCountry.country)]))
+                    cities.map(cityAndCountry => renderCityAndCountry(onClickCity)(cityAndCountry, 
+                        allWeather[getCityCode(cityAndCountry.city, cityAndCountry.countryCode)]))
                 }
             </List>
         </div>
+
     )
 }
 
@@ -63,6 +67,7 @@ CityList.propTypes = {
         PropTypes.shape({
             city: PropTypes.string.isRequired,
             country: PropTypes.string.isRequired,
+            countryCode: PropTypes.string.isRequired,
         })
     ).isRequired,
     onClickCity: PropTypes.func.isRequired,

@@ -1,84 +1,44 @@
-import { useState } from 'react'
+import { useEffect, useDebugValue } from 'react'
+import axios from 'axios'
 import { useParams } from 'react-router-dom'
-import { chartDataExample, forecastItemListExample } from '../utils/utils'
+import { getForecastUrl } from './../utils/urls'
+import getChartData from './../utils/transform/getChartData'
+import getForecastItemList from './../utils/transform/getForecastItemList'
+import { getCityCode } from './../utils/utils'
 
-const appid = process.env.REACT_APP_APIKEY
+const useCityPage = (allChartData, allForecastItemList, onSetChartData, onSetForecastItemList) => {
+    const { city, countryCode } = useParams()
 
-const useCityPage = () => {    
-    const [error, setError] = useState(null)
-    const { city, country } = useParams()
+    useDebugValue(`useCityPage ${city}`)
 
-    //here is where you could define these arrays if the API worked properly:
-    const chartData = chartDataExample
-    const forecastItemList = forecastItemListExample
+    useEffect(() => {
+        const getForecast = async () => {
+            const url = getForecastUrl({ city, countryCode })
+            const cityCode = getCityCode(city, countryCode)
+            try {
+                const { data } = await axios.get(url)
+                
+                const dataAux = getChartData(data)
 
-    // useEffect(() => {
+                onSetChartData({ [cityCode]: dataAux })
 
-    //     const getForecast = async () => {
+                const forecastItemListAux = getForecastItemList(data)
 
-    //         try {
-    //             const st = country === 'US' ? 'CA' : ''
-    //             const urlGeo = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${st},${country}&limit=1&appid=${appid}`
-    //             let geoResponse = await axios.get(urlGeo)
-    //             const geoData = geoResponse.data
-    //             let lat = geoData[0].lat
-    //             let lon = geoData[0].lon
+                onSetForecastItemList({ [cityCode]: forecastItemListAux })            
+            } catch (error) {
+                console.log(error)            
+            }
+        }
+        const cityCode = getCityCode(city, countryCode)
 
-    //             //// PROBLEM: API is no longer free, this endpoint is only available through suscription:
-    //             // const urlForecast = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${appid}`
-    //             // let forecastResponse = await axios.get(urlForecast)
+        if (allChartData && allForecastItemList && !allChartData[cityCode] && !allForecastItemList[cityCode]) {
+            getForecast()
+        }
+        
 
-    //             // if (!forecastResponse || !forecastResponse.data) 
-    //             // {
-    //             //     console.log("Error thrown!!!!!!!!!!!!")
-    //             //     throw new Error(`No weather data for ${city},${st},${country}`)
-    //             // }
+    }, [city, countryCode, onSetChartData, onSetForecastItemList, allChartData, allForecastItemList])
 
-    //             // const forecastData = forecastResponse.data
-
-    //             const urlWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appid}`
-    //             let weatherResponse = await new axios.get(urlWeather)
-
-    //             if (!weatherResponse || !weatherResponse.data) {
-    //                 throw new Error(`No weather data for ${city},${st},${country}`)
-    //             }
-
-    //             const weatherData = weatherResponse.data
-    //             if (weatherData !== undefined) {                    
-    //                 const temperature = toCelcius(weatherData.main.temp)
-    //                 const weatherState = weatherData.weather[0].main.toLowerCase()
-    //                 const wind = weatherData.wind.speed
-    //                 setState({
-    //                     temperature: temperature,
-    //                     state: weatherState,
-    //                     humidity: 0,
-    //                     wind: wind
-    //                 })
-    //             }
-    //         }
-    //         catch (error) {
-    //             //Errores que nos responde el server (500, 400, etc.)
-    //             if (error.response) {
-    //                 const { data, status } = error.response
-    //                 console.log("data", data)
-    //                 console.log("status", status)
-    //                 // setError("An error has occured in the server")
-    //             }//Errores que suceden por no llegar al server (network, host unreachable)
-    //             else if (error.request) {
-    //                 console.log("Server unreachable or no internet")
-    //                 // setError("Verify internet connection")
-    //             }//Errores imprevistos (Others)
-    //             else {
-    //                 console.log(`Exception: ${error.message}`)
-    //                 // setError("Error loading information")
-    //             }
-    //         }
-    //     }
-
-    // //    getForecast()      
-    // }, [city, country])
-
-    return { city, country, chartData, forecastItemList, error, setError }
+    return { city, countryCode }
 }
 
 export default useCityPage
