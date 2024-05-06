@@ -15,7 +15,10 @@ import useCityList from '../hooks/useCityList'
 const CityPage = () => {
         
     const {city, country, chartData, forecastItemList, error, setError} = useCityPage()
-    const { allWeather } = useCityList([{city, country}])
+    const cities = React.useMemo(()=> ([{ city, country }]), [city, country])
+    //[{city, country}]
+    const { allWeather } = useCityList(cities)
+    //const { allWeather } = useCityList([{city, country}])
     const weather = allWeather[getCityCode(city, country)]
     const temperature = weather && weather.temperature
     const state = weather && weather.state
