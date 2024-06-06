@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class ErrorBoundary extends Component {
+class ErrorBoundary extends PureComponent {
 
     constructor(props) {
         super(props)
@@ -10,8 +10,13 @@ class ErrorBoundary extends Component {
         }
     }
 
-    static getDeliveredStateFromError(error) {
+    // this.setState(getDerivedStateFromError(error))
+    static getDerivedStateFromError(error) {
         return { hasError: true }
+    }
+
+    componentDidCatch(error, errorInfo) {
+        console.log("ErrorInfo", errorInfo)
     }
 
     render() {
@@ -19,9 +24,9 @@ class ErrorBoundary extends Component {
             this.state.hasError ?
             (<h1>Hubo un Error</h1>)
             :
-            (this.props.children)            
+            (this.props.children)
         )
-    }  
+    }
 }
 
 export default ErrorBoundary
