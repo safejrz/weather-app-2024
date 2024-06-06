@@ -11,6 +11,8 @@ import useCityPage from './../hooks/useCityPage'
 import useCityList from './../hooks/useCityList'
 import { getCityCode } from './../utils/utils'
 import { getCountryNameByCountryCode } from './../utils/serviceCities'
+import Link from '@material-ui/core/Link'
+import { Link as RouterLink } from 'react-router-dom'
 
 const CityPage = ({actions, data}) => {
     const { allWeather, allChartData, allForecastItemList } = data
@@ -37,17 +39,17 @@ const CityPage = ({actions, data}) => {
     return (
         <AppFrame>
             <Grid container
-                justify="space-around"
+                justifyContent="space-around"
                 direction="column"
                 spacing={2}>
                 <Grid item container 
                     xs={12} 
-                    justify="center"
+                    justifyContent="center"
                     alignItems="flex-end">
                     <CityInfo city={city} country={country} />
                 </Grid>
                 <Grid container item xs={12}
-                    justify="center">
+                    justifyContent="center">
                     <Weather state={state} temperature={temperature} />
                     {
                         humidity && wind && 
@@ -70,7 +72,16 @@ const CityPage = ({actions, data}) => {
                     {
                         forecastItemList && <Forecast forecastItemList={forecastItemList} />
                     }
-                </Grid>
+                    </Grid>
+                    <Grid container item xs={12}
+                    justifyContent="center">
+                    <Link color="inherit"
+                        aria-label="Volver"
+                        component={RouterLink}
+                        to="/welcome">
+                        Ir al inicio
+                    </Link>
+                </Grid>              
             </Grid>        
         </AppFrame>
     )
