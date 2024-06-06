@@ -1,4 +1,4 @@
-const cities = [       
+const cities = [
     { city: "Madrid", country: "España", countryCode: "ES"},
     { city: "Ciudad de México", country: "México", countryCode: "MX"},
     { city: "Guadalajara", country: "México", countryCode: "MX"},

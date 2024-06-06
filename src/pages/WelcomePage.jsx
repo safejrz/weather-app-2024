@@ -13,34 +13,34 @@ const WelcomePage = () => {
             <h1 className='welcometext'>Welcome</h1>
             <Grid container
                 direction='column'
-                justifyContent='center'        
+                justifyContent='center'
                 className='full'>
-                <div className='highlight' >                
+                <div className='highlight' >
                     <Grid item container xs={12}
                     justifyContent='center'
                     alignItems='center'>
-                        <Grid item>     
-                        <IconContext.Provider value={{ size: "6em"}}>
-                            <WiDaySunny />
-                        </IconContext.Provider>
+                        <Grid item>
+                            <IconContext.Provider value={{ size:"6em" }}>
+                                <WiDaySunny />
+                            </IconContext.Provider>
                         </Grid>
                         <Grid item container
                         direction='column'
                             justifyContent='center'
-                            alignItems='center'>                        
-                            <Typography variant="h4" color='inherit' >            
-                                Weather App                            
+                            alignItems='center'>
+                            <Typography variant="h4" color='inherit' >
+                                Weather App
                             </Typography>
-                            <Link color='inherit' 
-                            aria-label='menu'
-                            component={RouterLink}
-                            to="/main">
+                            <Link color="inherit"
+                                aria-label="menu"
+                                component={RouterLink}
+                                to="/main">
                                 Enter
                             </Link>
                         </Grid>
-                    </Grid>                
+                    </Grid>
                 </div>
-            </Grid>      
+            </Grid>
         </WelcomeScreen>
     )
 }
