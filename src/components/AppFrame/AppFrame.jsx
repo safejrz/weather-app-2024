@@ -1,51 +1,68 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
-import IconButton from '@material-ui/core/IconButton'
-import { IconContext } from 'react-icons'
-import Grid from '@material-ui/core/Grid'
-import Link from '@material-ui/core/Link'
-import { Link as LinkRouter } from 'react-router-dom'
-import Typography from '@material-ui/core/Typography'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconState from './../IconState'
-import ErrorBoundary from './../../generic/ErrorBoundary'
+import React, { useReducer, useCallback } from 'react'
+import { BrowserRouter as Router,
+    Switch, 
+    Route } from 'react-router-dom'
+import WelcomePage from './pages/WelcomePage'
+import MainPage from './pages/MainPage'
+import CityPage from './pages/CityPage'
+import NotFoundPage from './pages/NotFoundPage'
+import ErrorBoundary from './generic/ErrorBoundary/ErrorBoundary'
+//import { texture } from 'three/examples/jsm/nodes/Nodes.js'
 
-const AppFrame = ({ children }) => {
+const initialValue = {
+    allWeather: {},
+    allChartData: {}, 
+    allForecastItemList: {}
+}
+
+const App = () => {
+
+    // action { type: "XXX", payload: "XXX" }
+    const reducer = useCallback((state, action) => {
+        switch (action.type) {
+            case 'SET_ALL_WEATHER':
+                const weatherCity = action.payload
+                const newAllWeather = { ...state.allWeather, ...weatherCity }
+                return { ...state, allWeather: newAllWeather }
+            case 'SET_CHART_DATA':
+                const chartDataCity = action.payload 
+                const newAllChartData = { ...state.allChartData, ...chartDataCity }
+                return { ...state, allChartData: newAllChartData }
+            case 'SET_FORECAST_ITEM_LIST':
+                const forecastItemListCity = action.payload
+                const newAllForecastItemListCity = { ...state.allForecastItemList, ...forecastItemListCity }
+                return { ...state, allForecastItemList: newAllForecastItemListCity }
+            default:
+                return state 
+        }
+    }, [])
+
+    const [state, dispatch] = useReducer(reducer, initialValue)
+
     return (
-        <Grid container
-        justifyContent="center">
-            <AppBar position="static">
-                <Toolbar variant="dense">
-                    <IconButton color="inherit" aria-label="menu">
-                        <Link 
-                            component={LinkRouter}
-                            to="/main" 
-                            color="inherit" 
-                            aria-label="menu">
-                            <IconContext.Provider value={{size:'2em'}}>
-                            	<IconState state="clear" />
-                            </IconContext.Provider>
-                        </Link>
-                    </IconButton>
-                    <Typography variant="h6" color="inherit">
-                        Weather App
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Grid item
-                xs={12}
-                sm={11}
-                md={10}
-                lg={8}>
-                <ErrorBoundary>{children}</ErrorBoundary>
-            </Grid>
-        </Grid>
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    <WelcomePage />
+                </Route>
+                <Route path="/welcome">
+                    <WelcomePage />
+                </Route>
+                <Route path="/main">
+                    <MainPage data={state} actions={dispatch} />
+                </Route>
+                <Route path="/city/:countryCode/:city">
+                    <CityPage data={state} actions={dispatch} />
+                </Route>
+                <Route exact path="/error">
+                    <ErrorBoundary saludo="HOLA!!!" />
+                </Route>
+                <Route>
+                    <NotFoundPage />
+                </Route>
+            </Switch>
+        </Router>
     )
 }
 
-AppFrame.propTypes = {
-    children: PropTypes.node
-}
-
-export default AppFrame
+export default App
