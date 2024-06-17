@@ -1,4 +1,4 @@
-import React, { useReducer } from "react"
+import React, { useContext, useReducer } from "react"
 
 const WeatherStateContext = React.createContext()
 
@@ -29,7 +29,7 @@ const reducer = (state, action) => {
     }
 }
 
-const WeatherContext = ({children}) => {
+const WeatherContext = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialValue)
     return (
         <WeatherDispatchContext.Provider value={dispatch}>
@@ -40,8 +40,25 @@ const WeatherContext = ({children}) => {
     )
 }
 
+const useWeatherDispatchContext = () => {
+    const dispatch = useContext(WeatherDispatchContext)
+    if (!dispatch) {
+        throw Error("Must set dispatch provider")
+    }
+
+    return dispatch
+}
+const useWeatherStateContext = () => {
+    const state = useContext(WeatherStateContext)
+    if (!state) {
+        throw Error("Must set state provider")
+    }
+
+    return state
+}
+
 export {
-     WeatherContext,
-      WeatherDispatchContext,
-      WeatherStateContext
+    WeatherContext,
+    useWeatherDispatchContext,
+    useWeatherStateContext
 }
