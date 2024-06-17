@@ -1,5 +1,5 @@
 import React from 'react' //useState, useCallback, useMemo,
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
@@ -11,26 +11,14 @@ const App = () => {
     return (
         <WeatherContext>
             <Router>
-                <Switch>
-                    <Route exact path="/">
-                        <WelcomePage />
-                    </Route>
-                    <Route path="/welcome">
-                        <WelcomePage />
-                    </Route>
-                    <Route path="/main">
-                        <MainPage />
-                    </Route>
-                    <Route path="/city/:countryCode/:city">
-                        <CityPage />
-                    </Route>
-                    <Route exact path="/error">
-                        <ErrorBoundary saludo="HOLA!!!" />
-                    </Route>
-                    <Route>
-                        <NotFoundPage />
-                    </Route>
-                </Switch>
+                <Routes>
+                    <Route path="/" element={<WelcomePage />} />
+                    <Route path="/welcome*" element={<WelcomePage />} />
+                    <Route path="/main*" element={<MainPage />} />
+                    <Route path="/city/:countryCode/:city" element={<CityPage />} />
+                    <Route path="/error" element={<ErrorBoundary saludo="HOLA!!!" />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
             </Router>
         </WeatherContext>
     )
