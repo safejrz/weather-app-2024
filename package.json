@@ -1,5 +1,5 @@
 {
-  "name": "weather-app",
+  "name": "weatherapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -25,7 +25,7 @@
   "scripts": {
     "start": "env-cmd -f .env react-scripts start",
     "build": "env-cmd -f .env react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
@@ -52,5 +52,10 @@
     "@storybook/addons": "^5.3.17",
     "@storybook/preset-create-react-app": "^2.1.0",
     "@storybook/react": "^5.3.17"
+    ,  
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^15.1.0",
+     "eslint-plugin-react": "^7.4.0",
+     "eslint-watch": "^7.0.0"
   }
 }

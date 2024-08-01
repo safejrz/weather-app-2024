@@ -1,4 +1,5 @@
-NOTE!!!: This program may be too old to run as is, you may need to run this command in the developer command prompt:
+### NOTE!!!: This program may be too old to run as is, you may need to run this command in the developer command prompt:
+https://github.com/react-icons/react-icons
 $env:NODE_OPTIONS = "--openssl-legacy-provider"
 
 
@@ -70,3 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
